@@ -50,9 +50,19 @@ Nincs szükség build lépésre: a `public/` mappa bármilyen statikus tárhelye
 - **Lábléc**: „Minden csomóból *úriember* lesz.” és óriási „Sir *Csomó*” felirat
 - Telefonon alul ott az **Útvonal** és a **Hívás időpontért** gomb – elbújik, amíg a nyitókép gombjai, a hívókártya vagy a
   lábléc látszik; a menü teljes képernyős, alján a két hívógombbal
-- Telefonra optimalizálva (320 px-től): minden gomb legalább 44 px-es érintési felület, a fejléc nem átlátszó, a szövegek
-  azonnal látszanak, nincs vízszintes görgetés
-- A `styles.css` és a `script.js` hivatkozásában verziószám van (`?v=1`): tartalmi módosítás után érdemes növelni
+- Telefonra optimalizálva (320, 360, 390 px-en és fekvő telefonon képernyőnként ellenőrizve):
+  - a nyitóképen a cím után rögtön a tábla jön, így a gubanc már az első képernyőn csokornyakkendővé áll össze;
+    utána a szöveg, a teljes szélességű hívógomb és a két telefonszám egymás mellett
+  - a fejlécben kerek hívógomb (Nóri száma) a menü mellett; a fejléc egy helyben áll és nem átlátszó; 380 px alatt a
+    logó alatt csak „Kutyakozmetika” áll, hogy ne törjön két sorba
+  - az alsó **Útvonal / Hívás időpontért** sáv csak a nyitókép után jelenik meg, és elbújik, amíg a hívókártya vagy a
+    lábléc látszik; fekvő telefonon legfeljebb 460 px széles
+  - tömörebb szekciók: kisebb térközök és címek, a csomóról szóló lépések és az etikett szabályai kétoszloposak
+    (rajz/szám balra, szöveg jobbra), a folyamat függőleges idővonal, a hívókártya kifut a képernyő széléig
+  - minden gomb és link legalább 44 px-es érintési felület (automatikusan ellenőrizve), koppintáskor finom visszajelzés,
+    nincs „beragadt” hover-állapot; a szövegek nem úsznak be, nincs vízszintes görgetés
+  - a számok (5,0 · 2019 · 24 óra) egyvonalas Playfair-számjegyekkel jelennek meg, nem régies „5,O” formában
+- A `styles.css` és a `script.js` hivatkozásában verziószám van (`?v=2`): tartalmi módosítás után érdemes növelni
 - Aki kikapcsolta az animációkat (`prefers-reduced-motion`), annak a csokornyakkendő azonnal kész, és semmi nem mozog;
   a vászon csak akkor rajzol, amikor látszik
 - Keresőknek: leírás, megosztási kép, strukturált adat (LocalBusiness, nyitvatartással és értékeléssel)

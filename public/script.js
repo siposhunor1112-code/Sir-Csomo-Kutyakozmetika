@@ -373,7 +373,7 @@
     });
   }
 
-  /* ---------- telefonos alsó sáv: elbújik, ha ugyanaz már látszik ---------- */
+  /* ---------- telefonos alsó sáv: a nyitókép után jelenik meg, és elbújik, ha ugyanaz már látszik ---------- */
   const dock = $("[data-dock]");
   const seen = new Set();
   function updateDock() {
@@ -387,7 +387,7 @@
       entries.forEach((en) => (en.isIntersecting ? seen.add(en.target) : seen.delete(en.target)));
       updateDock();
     }, { threshold: 0 });
-    [$(".hero__actions"), $("#idopont"), $(".foot")].forEach((el) => el && io.observe(el));
+    [$(".hero"), $("#idopont"), $(".foot")].forEach((el) => el && io.observe(el));
   }
 
   /* ---------- évszám ---------- */

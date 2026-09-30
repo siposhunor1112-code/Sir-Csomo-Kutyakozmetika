@@ -125,7 +125,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var
 .logo__word { display: flex; flex-direction: column; gap: 5px; }
 .logo__name { font: 500 22px/1 var(--serif); letter-spacing: -.01em; }
 .logo__name em { font-weight: 400; }
-.logo__sub { font: 600 10px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--mute); }
+.logo__sub { font: 600 10px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--mute); white-space: nowrap; }
 
 .nav__links { display: flex; gap: 4px; margin-left: auto; }
 .nav__links > a {
@@ -136,6 +136,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var
 .nav__num { font: italic 400 13px/1 var(--serif); color: var(--brass); }
 .nav__menu-foot { display: none; }
 .nav__toggle { display: none; }
+.nav__call { display: none; }
 
 /* ---------- nyitókép ---------- */
 .hero { padding-top: calc(var(--nav-h) + clamp(28px, 6vh, 72px)); padding-bottom: clamp(40px, 6vw, 72px); }
@@ -330,7 +331,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var
 .info__big { margin-top: 14px; font: 400 clamp(1.5rem, 2.4vw, 2rem)/1.15 var(--serif); letter-spacing: -.012em; }
 .info__block > p:not(.info__big):not(.info__routes):not(.social):not(.info__small) { margin-top: 6px; color: var(--ink-2); }
 .info__routes { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 0 22px; }
-.info__routes a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; font-size: 15px; border-bottom: 1px solid var(--line-2); transition: border-color .25s; }
+.info__routes a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; font-weight: 500; font-size: 15px; border-bottom: 1px solid var(--line-2); transition: border-color .25s; }
 .info__routes a:hover { border-color: var(--brass); }
 .info__small { margin-top: 12px; font-size: 14px; color: var(--mute); }
 
@@ -428,8 +429,15 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var
   .nav { background: var(--paper); box-shadow: 0 1px 0 var(--line); }
   .nav.is-scrolled { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
   .nav__cta { display: none; }
+  .nav__call {
+    display: grid; place-items: center; width: 44px; height: 44px; margin-left: auto; border-radius: 50%;
+    background: var(--ink); color: var(--brass-light); transition: transform .2s var(--ease), opacity .3s;
+  }
+  .nav__call svg { width: 19px; height: 19px; }
+  .nav__call:active { transform: scale(.92); }
+  .nav.is-open .nav__call { opacity: 0; pointer-events: none; }
   .nav__toggle {
-    display: grid; place-content: center; gap: 7px; width: 48px; height: 48px; margin-left: auto; margin-right: -8px;
+    display: grid; place-content: center; gap: 7px; width: 48px; height: 48px; margin-left: 6px; margin-right: -8px;
   }
   .nav__toggle span { display: block; width: 24px; height: 1.5px; background: var(--ink); transition: transform .35s var(--ease); }
   .nav.is-open .nav__toggle span:first-child { transform: translateY(4.25px) rotate(45deg); }
@@ -464,6 +472,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var
 
   .dock {
     position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 40;
+    max-width: 460px; margin: 0 auto;
     display: grid; grid-template-columns: auto 1fr; gap: 8px; padding: 8px;
     background: rgba(21, 23, 27, .94); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
     border-radius: 999px; box-shadow: 0 20px 40px -18px rgba(0, 0, 0, .45);
@@ -476,48 +485,160 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var
   .dock__call { background: var(--brass); color: #fff; }
   .dock__call svg { color: #fff; }
   .foot { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .foot__cols { line-height: 1.5; }
+  .foot__cols a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
+  .nav__call, .nav__toggle { flex: none; }
+  .logo { min-width: 0; }
 }
 
 @media (max-width: 640px) {
   body { font-size: 16px; }
-  .hero { padding-top: calc(var(--nav-h) + 30px); }
-  .hero__title { margin-top: 22px; font-size: clamp(3.1rem, 15.5vw, 4.6rem); }
-  .hero__lead { margin-top: 22px; }
-  .hero__actions { margin-top: 28px; }
-  .plate__frame { aspect-ratio: 1 / 1; }
-  .plate__frame::before { inset: 10px; }
-  .facts b { font-size: 1.2rem; }
-  .facts li { padding-right: 12px; }
+  .logo { gap: 10px; }
+  .logo__mark { width: 34px; height: 34px; }
+  .logo__name { font-size: 21px; }
+  .logo__sub { font-size: 9.5px; letter-spacing: .16em; }
+  .section { padding: 72px 0; }
+  .h2 { margin-top: 16px; font-size: clamp(2.15rem, 10vw, 2.9rem); line-height: 1.04; }
+  .h2 br { display: none; }
+  .section__lead { margin-top: 18px; }
+  .eyebrow { font-size: 11px; gap: 12px; }
+
+  /* nyitókép: a cím után rögtön a tábla, hogy a csokor már az első képernyőn összeálljon */
+  .hero { padding-top: calc(var(--nav-h) + 22px); padding-bottom: 8px; }
+  .hero__grid { gap: 0; }
+  .hero__copy { display: contents; }
+  .hero__grid > * , .hero__copy > * { min-width: 0; }
+  .hero .eyebrow { order: 1; }
+  .hero__title { order: 2; margin-top: 16px; font-size: clamp(2.9rem, 14.6vw, 4.4rem); line-height: .95; }
+  .plate { order: 3; margin-top: 22px; max-width: none; }
+  .hero__lead { order: 4; margin-top: 22px; font-size: 16.5px; line-height: 1.58; }
+  .hero__actions { order: 5; margin-top: 24px; display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .hero__actions .btn { width: 100%; min-height: 56px; font-size: 15px; }
+  .hero__actions .btn--line { min-height: 50px; }
+  .hero__phones { order: 6; margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; font-size: 14.5px; }
+  .hero__phones a { justify-content: center; min-height: 48px; white-space: nowrap; }
+  .plate__frame { aspect-ratio: 4 / 3; }
+  .plate__frame::before { inset: 9px; }
+  .plate__corner--tl, .plate__corner--tr { top: 6px; } .plate__corner--bl, .plate__corner--br { bottom: 6px; }
+  .plate__corner--tl, .plate__corner--bl { left: 6px; } .plate__corner--tr, .plate__corner--br { right: 6px; }
+  .plate__cap { margin-top: 8px; }
+
+  .facts { margin-top: 44px; }
+  .facts li { padding: 18px 12px 2px 0; gap: 5px; }
   .facts li + li { padding-left: 14px; }
   .facts li:nth-child(3) { padding-left: 0; }
-  .facts span { font-size: 13px; }
-  .journey { grid-template-columns: 1fr; row-gap: 0; }
-  .journey li { display: grid; grid-template-columns: 56px 1fr; column-gap: 18px; padding: 0 0 26px; }
-  .journey li:not(:last-child)::before { content: ""; position: absolute; left: 28px; top: 56px; bottom: 0; width: 1px; background: var(--line-2); }
-  .journey__n { grid-row: span 2; }
-  .journey h3 { margin-top: 14px; }
-  .stage { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
-  .stage__glyph { width: 110px; height: 55px; }
-  .rules { grid-template-columns: 1fr; }
-  .rule, .rule + .rule { padding: 28px 0 4px; border-left: 0; }
-  .rule + .rule { border-top: 1px solid var(--line); margin-top: 22px; }
-  .rule__big { height: auto; }
-  .faq details p { padding-right: 0; }
-  .ledger > div { grid-template-columns: 1fr; gap: 6px; }
-  .callbtn { padding: 0 18px; gap: 14px; }
+  .facts li:nth-child(n+3) { margin-top: 16px; }
+  .facts b { font-size: 1.15rem; }
+  .facts span { font-size: 13px; line-height: 1.35; }
+
+  /* szolgáltatások */
+  .carte { margin-top: 36px; }
+  .carte__col, .carte__col:nth-child(even) { padding: 26px 0 24px; }
+  .carte dl { margin-top: 8px; }
+  .carte dl > div { padding: 16px 0; }
+  .carte dt { font-size: 1.38rem; }
+  .carte dd { margin-top: 6px; font-size: 15px; }
+  .carte__note { margin-top: 18px; font-size: 15.5px; }
+  .head__cta { margin-top: 28px; }
+
+  /* a csomóról */
+  .stage { grid-template-columns: 76px 1fr; gap: 16px; padding: 24px 0; }
+  .stage__glyph { width: 76px; height: 38px; margin-top: 4px; }
+  .stage h3 { font-size: 1.45rem; }
+  .stage p { margin-top: 6px; font-size: 15px; }
+
+  /* folyamat */
+  .head--row { gap: 16px; }
+  .journey { margin-top: 36px; grid-template-columns: 1fr; row-gap: 0; }
+  .journey li { display: grid; grid-template-columns: 44px 1fr; column-gap: 16px; padding: 0 0 20px; }
+  .journey li:not(:last-child)::before { content: ""; position: absolute; left: 22px; top: 44px; bottom: 0; width: 1px; background: var(--line-2); }
+  .journey__n { grid-row: span 2; width: 44px; height: 44px; font-size: 15px; }
+  .journey h3 { margin-top: 9px; font-size: 1.25rem; }
+  .journey p { margin-top: 4px; font-size: 14.5px; }
+
+  /* Nóri */
+  .nori { gap: 36px; }
+  .nori__quote { margin-top: 26px; padding-left: 18px; }
+  .nori__quote p { font-size: 1.3rem; }
+  .nori__text { margin-top: 22px; font-size: 15.5px; }
+  .nori__card { padding: 22px 20px; }
+  .ledger > div { grid-template-columns: 98px 1fr; gap: 12px; padding: 13px 0; }
+  .ledger dt { font-size: 10px; letter-spacing: .16em; }
+  .ledger dd { font-size: 16px; }
+  .score { margin-top: 22px; }
+  .score__num { font-size: 4.4rem; }
+
+  /* etikett: szám balra, szöveg jobbra */
+  .rules { margin-top: 32px; grid-template-columns: 1fr; }
+  .rule, .rule + .rule { display: grid; grid-template-columns: 92px 1fr; column-gap: 16px; padding: 22px 0; border-left: 0; margin-top: 0; }
+  .rule + .rule { border-top: 1px solid var(--line); }
+  .rule__big { grid-row: span 2; height: auto; font-size: 3.2rem; align-items: baseline; }
+  .rule__big small { font-size: 1rem; }
+  .rule__big svg { width: 42px; height: 42px; align-self: flex-start; margin-top: 6px; }
+  .rule h3 { margin-top: 4px; font-size: 12px; }
+  .rule p { margin-top: 6px; font-size: 15px; }
+
+  /* GYIK */
+  .faq summary { padding: 18px 0; font-size: 1.15rem; gap: 16px; }
+  .faq__ico { width: 30px; height: 30px; }
+  .faq details p { padding: 0 0 22px; font-size: 15.5px; }
+
+  /* kapcsolat */
+  .contact { margin-top: 32px; gap: 8px; }
+  .call { padding: 26px 20px; margin: 0 calc(var(--gutter) * -1); }
+  .call__lead { margin-top: 14px; font-size: 1.25rem; }
+  .call__btns { margin-top: 22px; gap: 10px; }
+  .callbtn { min-height: 68px; padding: 0 18px; gap: 14px; }
+  .callbtn__who { min-width: 38px; font-size: 18px; }
+  .call__prep { margin-top: 24px; padding-top: 20px; }
   .call::after { display: none; }
-  .foot__cols { flex-direction: column; gap: 16px; }
+  .info__block { padding: 22px 0; }
+  .info__big { font-size: 1.45rem; }
+  .info__routes { gap: 0 18px; }
+  .hours li { padding: 8px 0; font-size: 15px; }
+  .map { aspect-ratio: 4 / 3; }
+  .social a { flex: 1; justify-content: center; }
+
+  /* lábléc */
+  .foot { padding-top: 56px; }
+  .foot__tag { font-size: 1.55rem; }
+  .foot__cols { flex-direction: column; gap: 14px; }
+  .foot__word { margin-top: 44px; }
 }
 
 @media (max-width: 380px) {
-  .hero__actions .btn { width: 100%; }
-  .logo__sub { letter-spacing: .14em; }
+  .hero .eyebrow { font-size: 10px; letter-spacing: .16em; gap: 10px; }
+  .eyebrow__rule { width: 24px; }
+  .logo__place { display: none; }
+  .hero__phones { grid-template-columns: 1fr; }
+  .hero__phones a { justify-content: flex-start; min-height: 44px; }
+  .facts b { font-size: 1.05rem; }
+  .callbtn { padding: 0 14px; gap: 10px; }
   .callbtn__num { font-size: 17px; }
+  .rule, .rule + .rule { grid-template-columns: 78px 1fr; }
+  .rule__big { font-size: 2.8rem; }
+  .stage { grid-template-columns: 1fr; gap: 8px; }
+}
+
+/* fekvő telefon: a tábla ne foglalja el az egész képernyőt */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); }
+  .plate__frame { aspect-ratio: 4 / 3; max-height: 70vh; }
 }
 
 @media (hover: none) {
   .btn--ink:hover { background: var(--ink); }
+  .callbtn:hover { background: none; border-color: var(--line-night); }
+  .callbtn:active { background: rgba(239, 234, 224, .1); }
+  .social a:hover { background: none; border-color: var(--line-2); }
+  .social a:active, .info__routes a:active, .hero__phones a:active { opacity: .6; }
+  .faq summary:active { opacity: .7; }
   .plate__reset:hover { transform: none; }
+}
+
+/* Playfair: arányos, egyvonalas számok (a „font” rövidítés a szabályokban visszaállítaná, ezért a végén áll) */
+.score__num, .ledger dd, .rule__big, .facts b, .journey__n, .info__big, .plate__no, .carte dt, .h2, .hero__title, .callbtn__who, .foot__word {
+  font-variant-numeric: lining-nums;
 }
 
 @media (prefers-reduced-motion: reduce) {
